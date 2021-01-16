@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Must have instaled because its not included in PyCharm or PyCharm Pro
+
+-font awesome via npm ( npm install --save @fortawesome/fontawesome-free) and put in angular.json files under styles ("node_modules/font-awesome/scss/font-awesome.scss")
+
+## Project is deployed at firebase 
+
+(https://rest-countries-api-2db6d.web.app)
+
+(https://rest-countries-api-2db6d.firebaseapp.com)
