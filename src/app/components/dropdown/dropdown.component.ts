@@ -1,15 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css']
+  styleUrls: ['./dropdown.component.scss'],
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent {
+  showOptions = false;
 
-  constructor() { }
+  @Input()
+  placeholder: string;
 
-  ngOnInit(): void {
+  @Input()
+  values: string[];
+
+  @Input()
+  value: string;
+
+  @Output()
+  valueChange: EventEmitter<string> = new EventEmitter();
+
+  select(value: string) {
+    this.valueChange.emit(value);
   }
 
+  toggleOptions() {
+    this.showOptions = !this.showOptions;
+  }
 }

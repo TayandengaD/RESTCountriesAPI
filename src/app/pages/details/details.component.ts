@@ -1,15 +1,39 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/service/api.service';
+import { Observable, of } from 'rxjs';
+import { Country, Currency, Language } from 'src/app/types/api';
+import { ActivatedRoute } from '@angular/router';
+import { tap, mergeMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-details',
+  selector: 'app-detail',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit {
+export class DetailComponent implements OnInit {
+  country$: Observable<Country>;
+  borderCountries$: Observable<Country[]>;
 
-  constructor() { }
+  constructor(private api: ApiService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.country$ = this.api.getCountryByName(params.country).pipe(
+        tap((res) => console.log(res)),
+        mergeMap((res) => {
+          this.borderCountries$ = this.api.getCountriesByCodes(res.borders);
+
+          return of(res);
+        })
+      );
+    });
   }
 
+  displayCurrencies(currencies: Currency[]) {
+    return currencies.map((currency) => currency.name).join(', ');
+  }
+
+  displayLanguages(languages: Language[]) {
+    return languages.map((language) => language.name).join(', ');
+  }
 }
